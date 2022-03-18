@@ -30,3 +30,7 @@ change-active-date | 单个日期选择
 change-range-date | mode=range单个周选择
 change-range-date | mode=rangeweek开始日期-结束日期选择
 select-month | 月份选择
+
+### 演示图片
+![image](https://octstream.melive.shop/image/202203/c05e90deacf64b4b8a1fdf8aae362f87.png)
+![image](https://octstream.melive.shop/image/202203/bb503de698d040d0a93c2888ecaab627.png)
