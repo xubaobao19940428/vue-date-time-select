@@ -1,4 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import VueDateTimeSelect from '../packages'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+app.use(VueDateTimeSelect)
+
+app.mount('#app')

@@ -1,15 +1,17 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+      <VueDateTimeSelect  :mode="'date'" @change-active-date="changeActiveDate"></VueDateTimeSelect>
+      <VueDateTimeSelect  :mode="'rangeweek'" @change-range-date="changeRangeDate"></VueDateTimeSelect>
+      <VueDateTimeSelect  :mode="'range'" @change-range-date="changeRangeDate"></VueDateTimeSelect>
+	  <VueDateTimeSelect  :mode="'month'" @select-month="selectMonth"></VueDateTimeSelect>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
+
   }
 }
 </script>
@@ -22,5 +24,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  height:100%;
+  width:100%;
 }
 </style>
