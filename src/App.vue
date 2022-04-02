@@ -12,6 +12,17 @@ export default {
   name: 'App',
   components: {
 
+  },
+  methods:{
+      changeActiveDate(data){
+          console.log(data)
+      },
+      changeRangeDate(data){
+          console.log(data)
+      },
+      selectMonth(month){
+          console.log(month)
+      }
   }
 }
 </script>

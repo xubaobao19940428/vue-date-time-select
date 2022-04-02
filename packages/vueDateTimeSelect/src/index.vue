@@ -379,8 +379,8 @@
 				this.monthEndDate = this.dateToTimes(new Date(now.getFullYear(),now.getMonth()+1, 0));
 				// }
 				this.day = now.getDate();
-				this.today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-				this.activeDate = this.today;
+				this.today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()>9?now.getDate():'0'+now.getDate()}`;
+				this.activeDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 				let nowMonth = ''
 				if(now.getMonth()+1<10){
 					nowMonth = '0'+ (now.getMonth()+1)
@@ -757,25 +757,35 @@
 				let weeks = this.getMonthWeek(this.year, this.month); //调用方法传入当前年和当前月获得本月几周
 				//获取月第一个周一日期
 				let oneDate = this.getMondayTime(this.year, this.month, 1);
-				console.log(this.currentMonthDays,currentMonthDay)
+				
 				var weeksall = [] //所有周一
 				for (var i = 0; i < weeks; i++) {
 					weeksall.push(oneDate + i * 7)
 				}
-				console.log('weeksall',weeksall)
+				
 				this.weeksSelectAll=[]
 				weeksall.map(item => {
 					let obj={}
-					console.log(this.activeDate)
 					if(item<=9&&item+6<10){
 						obj.monday = this.year+'-'+this.month +'-0'+item
 						obj.sunday = this.year+'-'+this.month +'-0'+(item+6)
-					}else if(item<=9&&item+6>10){
+					}else if(item<=9&&item+6>=10){
 						obj.monday = this.year+'-'+this.month +'-0'+item
 						obj.sunday = this.year+'-'+this.month +'-'+(item+6)
 					}else if(item>9){
-						obj.monday = this.year+'-'+this.month +'-'+item
-						obj.sunday = this.year+'-'+this.month +'-'+(item+6)
+                        if(item<=this.currentMonthDays&&item+6<=this.currentMonthDays){
+                            obj.monday = this.year+'-'+this.month +'-'+item
+						    obj.sunday = this.year+'-'+this.month +'-'+(item+6)
+                        }else if(item<=this.currentMonthDays&&item+6>this.currentMonthDays){
+                            if(this.month<=11){
+
+                                obj.monday =  this.year+'-'+this.month +'-'+item
+                                obj.sunday = this.year+'-'+(this.month + 1) +'-'+(item+6-this.currentMonthDays)
+                            }else{
+                                obj.sunday = this.year+'-' + 1 +'-'+(item+6-this.currentMonthDays)
+                            }
+                        }
+						
 					}
 					
 					if(obj.sunday>this.today){
@@ -784,7 +794,7 @@
 					if(item+6>this.currentMonthDays && item<=this.currentMonthDays){
 						obj.startTime = this.month +'.'+ item
 						if(this.month<=11){
-							obj.endTime = this.month+1+'.'+(item+6-this.currentMonthDays)
+							obj.endTime = (this.month+1)+'.'+(item+6-this.currentMonthDays)
 						}else{
 							obj.endTime = 1+'.'+(item+6-this.currentMonthDays)
 						}
@@ -797,7 +807,13 @@
 						this.weeksSelectAll.push(obj)
 					}
 				})
-				
+				this.weeksSelectAll.map((item,index)=>{
+					if(item.monday<=this.today&&item.sunday<=this.today){
+						this.activeWeek = item.activeWeekDate
+						this.startDate = item.monday
+						this.endDate = item.sunday
+					}
+				})
 			},
 			//week点击时置为已选择的值
 			getWeekDate(date){
